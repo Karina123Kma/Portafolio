@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parcial 1 | Portafolio</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --primary:#1a1a1a;
+    --accent:#c5a059;
+    --bg:#ffffff;
+    --light:#f7f7f7;
+    --border:#ececec;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    font-family:'Montserrat',sans-serif;
+    background:var(--bg);
+    color:var(--primary);
+}
+
+/* NAV */
+nav{
+    position:fixed;
+    top:0;
+    width:100%;
+    padding:15px 8%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:rgba(255,255,255,0.95);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+}
+
+nav a{
+    text-decoration:none;
+    color:var(--primary);
+    font-size:.75rem;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+nav a:hover{color:var(--accent);}
+
+/* HEADER */
+.header{
+    padding-top:120px;
+    padding-bottom:60px;
+    text-align:center;
+}
+
+.header span{
+    font-size:.75rem;
+    letter-spacing:3px;
+    color:var(--accent);
+    font-weight:600;
+}
+
+.header h1{
+    font-family:'Playfair Display',serif;
+    font-size:clamp(2rem,5vw,3.5rem);
+    font-weight:400;
+    margin-top:10px;
+}
+
+/* GRID */
+.container{
+    max-width:1200px;
+    margin:auto;
+    padding:40px 8% 80px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:25px;
+}
+
+/* CARDS */
+.card{
+    background:white;
+    border:1px solid var(--border);
+    padding:35px 25px;
+    text-decoration:none;
+    color:var(--primary);
+    transition:all .3s ease;
+    position:relative;
+    overflow:hidden;
+}
+
+.card::after{
+    content:"";
+    position:absolute;
+    left:0;
+    bottom:0;
+    width:100%;
+    height:3px;
+    background:var(--accent);
+    transform:scaleX(0);
+    transition:transform .3s ease;
+    transform-origin:left;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 10px 25px rgba(0,0,0,0.08);
+}
+
+.card:hover::after{ transform:scaleX(1); }
+
+.card h3{
+    font-family:'Playfair Display',serif;
+    font-weight:400;
+    margin-bottom:10px;
+}
+
+.card p{
+    font-size:.85rem;
+    color:#666;
+}
+
+/* FOOTER */
+footer{
+    border-top:1px solid var(--border);
+    text-align:center;
+    padding:40px 0;
+    font-size:.8rem;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <div>💻</div>
+    <div>
+        <a href="index.html">Volver al inicio</a>
+    </div>
+</nav>
+
+<div class="header">
+    <span>CNO V — SEGURIDAD INFORMÁTICA</span>
+    <h1>Parcial 1</h1>
+</div>
+
+<div class="container">
+    <div class="grid">
+
+        <!-- ACTIVIDAD 1 -->
+        <a href="actividad1.html" class="card">
+            <h3>Actividad 1</h3>
+            <p>Descripción breve de la evidencia o práctica realizada.</p>
+        </a>
+
+        <!-- ACTIVIDAD 2 -->
+        <a href="actividad2.html" class="card">
+            <h3>Actividad 2</h3>
+            <p>Descripción breve de la evidencia o práctica realizada.</p>
+        </a>
+
+        <!-- ACTIVIDAD 3 -->
+        <a href="actividad3.html" class="card">
+            <h3>Actividad 3</h3>
+            <p>Descripción breve de la evidencia o práctica realizada.</p>
+        </a>
+
+        <!-- ACTIVIDAD 4 -->
+        <a href="actividad4.html" class="card">
+            <h3>Actividad 4</h3>
+            <p>Descripción breve de la evidencia o práctica realizada.</p>
+        </a>
+
+        <!-- ACTIVIDAD 5 -->
+        <a href="actividad5.html" class="card">
+            <h3>Actividad 5</h3>
+            <p>Descripción breve de la evidencia o práctica realizada.</p>
+        </a>
+
+    </div>
+</div>
+
+<footer>
+    Karina Mendoza Aguado © 2026
+</footer>
+
+</body>
+</html>
