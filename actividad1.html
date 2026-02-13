@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Actividad 1 | Caso Equifax</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --primary:#1a1a1a;
+    --accent:#c5a059;
+    --border:#ececec;
+    --light:#f9f9f9;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    font-family:'Montserrat',sans-serif;
+    color:var(--primary);
+    line-height:1.7;
+    background:white;
+}
+
+/* NAV */
+nav{
+    position:fixed;
+    top:0;
+    width:100%;
+    padding:15px 8%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:rgba(255,255,255,0.95);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+    z-index:10;
+}
+
+nav a{
+    text-decoration:none;
+    color:var(--primary);
+    font-size:.75rem;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+nav a:hover{color:var(--accent);}
+
+/* HEADER */
+.header{
+    padding-top:120px;
+    text-align:center;
+    margin-bottom:60px;
+}
+
+.header h1{
+    font-family:'Playfair Display',serif;
+    font-weight:400;
+    font-size:2.5rem;
+}
+
+.header p{
+    margin-top:10px;
+    color:#777;
+}
+
+/* CONTENT */
+.container{
+    max-width:900px;
+    margin:auto;
+    padding:0 8% 80px;
+}
+
+h2{
+    font-family:'Playfair Display',serif;
+    font-weight:400;
+    margin:50px 0 20px;
+    font-size:1.6rem;
+    border-left:3px solid var(--accent);
+    padding-left:15px;
+}
+
+p{ margin-bottom:15px; }
+
+ul{ margin-left:20px; margin-bottom:15px; }
+
+/* DOWNLOAD */
+.download{
+    text-align:center;
+    margin-top:50px;
+}
+
+.btn-download{
+    display:inline-block;
+    padding:14px 28px;
+    background:var(--primary);
+    color:white;
+    text-decoration:none;
+    font-weight:600;
+    border-radius:8px;
+    transition:all .3s ease;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.btn-download:hover{
+    background:var(--accent);
+    transform:translateY(-3px);
+    box-shadow:0 8px 18px rgba(0,0,0,0.15);
+}
+
+/* FOOTER */
+footer{
+    border-top:1px solid var(--border);
+    text-align:center;
+    padding:40px 0;
+    font-size:.8rem;
+    margin-top:60px;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <div>💻</div>
+    <div>
+        <a href="parcial1.html">Volver al parcial</a>
+    </div>
+</nav>
+
+<div class="header">
+    <h1>Reporte Técnico de Ciberseguridad</h1>
+    <p>Caso: Equifax (2017) — Robo masivo de datos</p>
+</div>
+
+<div class="container">
+
+<h2>Introducción</h2>
+<p>
+El ciberataque sufrido por Equifax en 2017 constituye uno de los incidentes de seguridad
+de la información más relevantes de la última década debido a su magnitud, impacto
+económico y consecuencias regulatorias.
+</p>
+<p>
+La brecha expuso datos personales altamente sensibles de millones de personas,
+evidenciando fallas en la gestión de vulnerabilidades, monitoreo y gobierno corporativo.
+</p>
+
+<h2>Contexto general del ataque</h2>
+<p>
+El incidente se originó por la explotación de una vulnerabilidad crítica en el framework
+Apache Struts dentro de una aplicación web pública.
+Aunque el parche estaba disponible, no fue aplicado ni verificado.
+</p>
+
+<h2>Vector de ataque</h2>
+<p>
+Se explotó la vulnerabilidad CVE-2017-5638, que permitía ejecución remota de código
+sin autenticación a través de solicitudes manipuladas.
+</p>
+
+<h2>Desarrollo del ataque</h2>
+<ul>
+<li>Acceso inicial mediante una aplicación expuesta a Internet.</li>
+<li>Instalación de mecanismos de persistencia.</li>
+<li>Movimiento lateral dentro de la red corporativa.</li>
+<li>Consultas masivas y exfiltración de datos personales.</li>
+<li>Intentos de encubrimiento para retrasar la detección.</li>
+</ul>
+
+<h2>Impacto (Modelo CIA)</h2>
+<p>
+La confidencialidad fue el principio más afectado al exponerse información de cerca de
+147.9 millones de personas. También existieron riesgos significativos para la integridad
+de los registros y la disponibilidad de servicios tras el descubrimiento del incidente.
+</p>
+
+<h2>Conclusiones</h2>
+<p>
+El caso demuestra que la omisión de prácticas básicas como la correcta gestión de
+parches, segmentación de red y monitoreo continuo puede derivar en pérdidas
+millonarias y daño reputacional severo.
+</p>
+
+<h2>Referencias</h2>
+<p>
+Reportes oficiales, marcos normativos internacionales y documentación pública
+relacionada con el incidente.
+</p>
+
+<!-- BOTÓN DESCARGA -->
+<div class="download">
+    <a href="act01-Equipo5.pdf" download class="btn-download">
+        Descargar PDF original
+    </a>
+</div>
+
+</div>
+
+<footer>
+Karina Mendoza Aguado © 2026
+</footer>
+
+</body>
+</html>
