@@ -61,26 +61,30 @@
         .nav-right a:hover { color: var(--accent); }
 
         /* Dropdown Parciales */
-        .dropdown { position: relative; cursor: pointer; }
         .dropdown-content {
-            display: none;
-            position: absolute;
-            top: 100%; right: 0;
-            background: white;
-            min-width: 180px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
-            border: 1px solid var(--border);
-            padding: 10px 0;
-            margin-top: 10px;
-        }
-        .dropdown-content a {
-            padding: 10px 20px;
-            display: block;
-            text-transform: none;
-            font-size: 0.8rem;
-        }
-        .dropdown:hover .dropdown-content { display: block; }
-        .dropdown.active .dropdown-content { display: block; }
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: all .25s ease;
+
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    min-width: 180px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    border: 1px solid var(--border);
+    padding: 10px 0;
+    margin-top: 10px;
+}
+
+/* cuando está activo */
+.dropdown.show .dropdown-content {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
 
         /* --- CONTENIDO --- */
         .hero {
@@ -233,9 +237,29 @@
     </footer>
 
     <script>
-        const d = document.getElementById('pDropdown');
-        d.addEventListener('click', function() { if(window.innerWidth < 1024) this.classList.toggle('active'); });
-        window.addEventListener('click', function(e) { if (!d.contains(e.target)) d.classList.remove('active'); });
-    </script>
+const dropdown = document.getElementById('pDropdown');
+const btn = document.getElementById('dropBtn');
+
+/* abrir al dar click */
+btn.addEventListener('click', function(e){
+    e.preventDefault();
+    dropdown.classList.toggle('show');
+});
+
+/* cerrar al hacer click fuera */
+window.addEventListener('click', function(e){
+    if(!dropdown.contains(e.target)){
+        dropdown.classList.remove('show');
+    }
+});
+
+/* cerrar después de elegir opción */
+document.querySelectorAll('.dropdown-content a').forEach(link=>{
+    link.addEventListener('click', ()=>{
+        dropdown.classList.remove('show');
+    });
+});
+</script>
+
 </body>
 </html>
