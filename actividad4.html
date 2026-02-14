@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Actividad 04 | Mecanismos de defensa</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --primary:#1a1a1a;
+    --accent:#c5a059;
+    --border:#ececec;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    font-family:'Montserrat',sans-serif;
+    color:var(--primary);
+    line-height:1.7;
+    background:white;
+}
+
+/* NAV */
+nav{
+    position:fixed;
+    top:0;
+    width:100%;
+    padding:15px 8%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:rgba(255,255,255,0.95);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+    z-index:10;
+}
+
+nav a{
+    text-decoration:none;
+    color:var(--primary);
+    font-size:.75rem;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+nav a:hover{color:var(--accent);}
+
+/* HEADER */
+.header{
+    padding-top:120px;
+    text-align:center;
+    margin-bottom:60px;
+}
+
+.header h1{
+    font-family:'Playfair Display',serif;
+    font-weight:400;
+    font-size:2.5rem;
+}
+
+.header p{
+    margin-top:10px;
+    color:#777;
+}
+
+/* CONTENT */
+.container{
+    max-width:1000px;
+    margin:auto;
+    padding:0 8% 80px;
+}
+
+h2{
+    font-family:'Playfair Display',serif;
+    font-weight:400;
+    margin:50px 0 20px;
+    font-size:1.6rem;
+    border-left:3px solid var(--accent);
+    padding-left:15px;
+}
+
+p{ margin-bottom:15px; }
+
+/* TABLE */
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+    font-size:.9rem;
+}
+
+th, td{
+    border:1px solid var(--border);
+    padding:12px;
+    text-align:left;
+}
+
+th{
+    background:#f4f4f4;
+    font-weight:600;
+}
+
+/* DOWNLOAD */
+.download{
+    text-align:center;
+    margin-top:50px;
+}
+
+.btn-download{
+    display:inline-block;
+    padding:14px 28px;
+    background:var(--primary);
+    color:white;
+    text-decoration:none;
+    font-weight:600;
+    border-radius:8px;
+    transition:all .3s ease;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.btn-download:hover{
+    background:var(--accent);
+    transform:translateY(-3px);
+    box-shadow:0 8px 18px rgba(0,0,0,0.15);
+}
+
+/* FOOTER */
+footer{
+    border-top:1px solid var(--border);
+    text-align:center;
+    padding:40px 0;
+    font-size:.8rem;
+    margin-top:60px;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <div>💻</div>
+    <div>
+        <a href="parcial1.html">Volver al parcial</a>
+    </div>
+</nav>
+
+<div class="header">
+    <h1>Mecanismos de protección en red</h1>
+    <p>Actividad 04</p>
+    <p><strong>Karina Mendoza Aguado | 179859</strong></p>
+</div>
+
+<div class="container">
+
+<h2>Objetivo</h2>
+<p>
+A partir de una red hipotética, se deben definir políticas que permitan o nieguen el tráfico
+de acuerdo con el servicio solicitado. Las reglas consideran protocolo, origen, destino y
+estado de la conexión cuando es necesario.
+</p>
+
+<h2>Reglas de filtrado propuestas</h2>
+
+<table>
+<tr>
+<th>#</th>
+<th>Acción requerida</th>
+<th>Regla propuesta</th>
+</tr>
+
+<tr>
+<td>1</td>
+<td>Establecer política por defecto</td>
+<td>iptables -P INPUT DROP / iptables -P FORWARD DROP / iptables -P OUTPUT DROP</td>
+</tr>
+
+<tr>
+<td>2</td>
+<td>Permitir conexiones relacionadas</td>
+<td>iptables -A FORWARD -m state --state ESTABLISHED,RELATED -j ACCEPT</td>
+</tr>
+
+<tr>
+<td>3</td>
+<td>Consultas DNS TCP desde la red interna</td>
+<td>iptables -A FORWARD -p tcp -s 10.0.0.0/24 --dport 53 -m state --state NEW -j ACCEPT</td>
+</tr>
+
+<tr>
+<td>4</td>
+<td>Recepción de correo en servidor</td>
+<td>iptables -A FORWARD -p tcp -d 10.0.0.10 --dport 25 -m state --state NEW -j ACCEPT</td>
+</tr>
+
+<tr>
+<td>5</td>
+<td>Envío de correo hacia Internet</td>
+<td>iptables -A FORWARD -p tcp -s 10.0.0.10 --dport 25 -m state --state NEW -j ACCEPT</td>
+</tr>
+
+<tr>
+<td>6</td>
+<td>Acceso web al servidor público</td>
+<td>iptables -A FORWARD -p tcp -d 10.0.0.20 --dport 80 -m state --state NEW -j ACCEPT</td>
+</tr>
+
+<tr>
+<td>7</td>
+<td>Navegación HTTP de usuarios</td>
+<td>iptables -A FORWARD -p tcp -s 10.0.0.0/24 --dport 80 -m state --state NEW -j ACCEPT</td>
+</tr>
+
+</table>
+
+<!-- BOTÓN -->
+<div class="download">
+    <a href="179859-act04.pdf" download class="btn-download">
+        Descargar PDF
+    </a>
+</div>
+
+</div>
+
+<footer>
+Karina Mendoza Aguado © 2026
+</footer>
+
+</body>
+</html>
