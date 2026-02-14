@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Actividad 02 | Servicios de Seguridad</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --primary:#1a1a1a;
+    --accent:#c5a059;
+    --border:#ececec;
+    --light:#f9f9f9;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    font-family:'Montserrat',sans-serif;
+    color:var(--primary);
+    line-height:1.7;
+    background:white;
+}
+
+/* NAV */
+nav{
+    position:fixed;
+    top:0;
+    width:100%;
+    padding:15px 8%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:rgba(255,255,255,0.95);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+    z-index:10;
+}
+
+nav a{
+    text-decoration:none;
+    color:var(--primary);
+    font-size:.75rem;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+nav a:hover{color:var(--accent);}
+
+/* HEADER */
+.header{
+    padding-top:120px;
+    text-align:center;
+    margin-bottom:60px;
+}
+
+.header h1{
+    font-family:'Playfair Display',serif;
+    font-weight:400;
+    font-size:2.5rem;
+}
+
+.header p{
+    margin-top:10px;
+    color:#777;
+}
+
+/* CONTENT */
+.container{
+    max-width:900px;
+    margin:auto;
+    padding:0 8% 80px;
+}
+
+h2{
+    font-family:'Playfair Display',serif;
+    font-weight:400;
+    margin:50px 0 20px;
+    font-size:1.6rem;
+    border-left:3px solid var(--accent);
+    padding-left:15px;
+}
+
+p{ margin-bottom:15px; }
+
+ul{ margin-left:20px; margin-bottom:15px; }
+
+/* DOWNLOAD */
+.download{
+    text-align:center;
+    margin-top:50px;
+}
+
+.btn-download{
+    display:inline-block;
+    padding:14px 28px;
+    background:var(--primary);
+    color:white;
+    text-decoration:none;
+    font-weight:600;
+    border-radius:8px;
+    transition:all .3s ease;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.btn-download:hover{
+    background:var(--accent);
+    transform:translateY(-3px);
+    box-shadow:0 8px 18px rgba(0,0,0,0.15);
+}
+
+/* FOOTER */
+footer{
+    border-top:1px solid var(--border);
+    text-align:center;
+    padding:40px 0;
+    font-size:.8rem;
+    margin-top:60px;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <div>💻</div>
+    <div>
+        <a href="parcial1.html">Volver al parcial</a>
+    </div>
+</nav>
+
+<div class="header">
+    <h1>Servicios de Seguridad</h1>
+    <p>ITU-T X.800 y RFC 4949 — Análisis aplicado</p>
+    <p><strong>Karina Mendoza Aguado | 179859</strong></p>
+</div>
+
+<div class="container">
+
+<h2>Marco conceptual</h2>
+<p>
+La protección de la información dentro de organizaciones modernas exige modelos que
+permitan clasificar los incidentes y comprender su impacto. La recomendación ITU-T X.800
+propone servicios que ayudan a identificar qué propiedad fundamental debe preservarse.
+</p>
+<p>
+De manera complementaria, el RFC 4949 ofrece una terminología común para describir
+amenazas, vulnerabilidades y ataques, facilitando la comunicación entre profesionales.
+</p>
+
+<h2>Escenario 1 — Intrusión por malware en correo</h2>
+<p>
+<b>Servicios afectados:</b> autenticación, confidencialidad y disponibilidad.
+Un archivo adjunto malicioso habilita acceso remoto y genera interrupciones en la operación.
+</p>
+<p>
+<b>Controles:</b> filtrado de correo, capacitación al usuario y políticas de respaldo.
+</p>
+
+<h2>Escenario 2 — Exposición en la nube</h2>
+<p>
+<b>Servicios afectados:</b> confidencialidad y control de acceso.
+Permisos incorrectos permiten que terceros consulten información sensible.
+</p>
+<p>
+<b>Controles:</b> revisiones periódicas y mínimo privilegio.
+</p>
+
+<h2>Escenario 3 — Compromiso de proveedor</h2>
+<p>
+<b>Servicios afectados:</b> integridad.
+La distribución de software alterado provoca infecciones a gran escala.
+</p>
+<p>
+<b>Controles:</b> validación criptográfica y monitoreo continuo.
+</p>
+
+<h2>Escenario 4 — Ingeniería social</h2>
+<p>
+<b>Servicios afectados:</b> autenticación.
+Los usuarios entregan datos en portales falsificados.
+</p>
+<p>
+<b>Controles:</b> autenticación multifactor y campañas de concientización.
+</p>
+
+<h2>Escenario 5 — Eliminación de activos críticos</h2>
+<p>
+<b>Servicios afectados:</b> disponibilidad e integridad.
+Tras obtener privilegios elevados, el atacante borra información esencial.
+</p>
+<p>
+<b>Controles:</b> copias fuera de línea y separación de funciones.
+</p>
+
+<h2>Conclusiones</h2>
+<p>
+Los servicios definidos por X.800 siguen siendo útiles para interpretar incidentes actuales.
+La estandarización del lenguaje promovida por el RFC 4949 permite reportes más claros,
+mejor análisis y decisiones oportunas dentro de la gestión de riesgos.
+</p>
+
+<!-- BOTÓN DESCARGA -->
+<div class="download">
+    <a href="Actividad02_KarinaMendoza.pdf" download class="btn-download">
+        Descargar PDF
+    </a>
+</div>
+
+</div>
+
+<footer>
+Karina Mendoza Aguado © 2026
+</footer>
+
+</body>
+</html>
