@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Actividad 03 | iptables</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --primary:#1a1a1a;
+    --accent:#c5a059;
+    --border:#ececec;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    font-family:'Montserrat',sans-serif;
+    color:var(--primary);
+    line-height:1.7;
+    background:white;
+}
+
+/* NAV */
+nav{
+    position:fixed;
+    top:0;
+    width:100%;
+    padding:15px 8%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:rgba(255,255,255,0.95);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+    z-index:10;
+}
+
+nav a{
+    text-decoration:none;
+    color:var(--primary);
+    font-size:.75rem;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+nav a:hover{color:var(--accent);}
+
+/* HEADER */
+.header{
+    padding-top:120px;
+    text-align:center;
+    margin-bottom:60px;
+}
+
+.header h1{
+    font-family:'Playfair Display',serif;
+    font-weight:400;
+    font-size:2.3rem;
+}
+
+.header p{
+    margin-top:10px;
+    color:#777;
+}
+
+/* CONTENT */
+.container{
+    max-width:900px;
+    margin:auto;
+    padding:0 8% 80px;
+}
+
+h2{
+    font-family:'Playfair Display',serif;
+    font-weight:400;
+    margin:45px 0 15px;
+    font-size:1.4rem;
+    border-left:3px solid var(--accent);
+    padding-left:15px;
+}
+
+p{ margin-bottom:12px; }
+
+.code{
+    background:#f7f7f7;
+    border:1px solid var(--border);
+    padding:12px 15px;
+    border-radius:8px;
+    font-family:monospace;
+    margin:10px 0;
+    font-size:.9rem;
+}
+
+/* DOWNLOAD */
+.download{
+    text-align:center;
+    margin-top:60px;
+}
+
+.btn-download{
+    display:inline-block;
+    padding:14px 28px;
+    background:var(--primary);
+    color:white;
+    text-decoration:none;
+    font-weight:600;
+    border-radius:8px;
+    transition:all .3s ease;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.btn-download:hover{
+    background:var(--accent);
+    transform:translateY(-3px);
+    box-shadow:0 8px 18px rgba(0,0,0,0.15);
+}
+
+/* FOOTER */
+footer{
+    border-top:1px solid var(--border);
+    text-align:center;
+    padding:40px 0;
+    font-size:.8rem;
+    margin-top:60px;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <div>💻</div>
+    <div>
+        <a href="parcial1.html">Volver al parcial</a>
+    </div>
+</nav>
+
+<div class="header">
+    <h1>Actividad 03</h1>
+    <p>Interpretación y traducción de políticas de filtrado en iptables</p>
+    <p><strong>Karina Mendoza Aguado</strong></p>
+</div>
+
+<div class="container">
+
+<h2>1. Flujo del paquete</h2>
+<p>
+Cuando un paquete llega al sistema, primero pasa por una interfaz de red,
+después por una cadena y finalmente se ejecuta una acción.
+</p>
+
+<h2>2. Propósito de las tablas</h2>
+<p><b>FILTER:</b> filtrado de paquetes (bloquear / permitir).</p>
+<p><b>NAT:</b> traducción de direcciones.</p>
+<p><b>MANGLE:</b> modificación avanzada de paquetes.</p>
+<p><b>RAW:</b> excepciones de seguimiento.</p>
+<p><b>SECURITY:</b> aplicación de políticas de seguridad.</p>
+
+<h2>3. Anatomía de un comando</h2>
+<div class="code">
+iptables -A INPUT -p tcp -m multiport --dports 80,443 -j ACCEPT
+</div>
+
+<h2>4. ¿Qué permite?</h2>
+<p>
+Permite el tráfico TCP entrante hacia los puertos 80 y 443 para habilitar acceso web.
+</p>
+
+<h2>5. Variables y opciones comunes</h2>
+<p><b>Limitar intentos por minuto</b></p>
+<div class="code">--limit 5/min</div>
+
+<p><b>Filtrar por IP de origen</b></p>
+<div class="code">-s 192.168.1.0/24</div>
+
+<p><b>Ver solo números</b></p>
+<div class="code">-n</div>
+
+<p><b>Ver reglas con contadores</b></p>
+<div class="code">-v</div>
+
+<h2>6. Interpretación de regla</h2>
+<div class="code">
+iptables -A INPUT -i eth0 -p tcp -m multiport --dports 22,80,443 -m state --state NEW,ESTABLISHED -j ACCEPT
+</div>
+<p>
+Se acepta tráfico nuevo y ya establecido para SSH, HTTP y HTTPS en la interfaz eth0.
+</p>
+
+<h2>7. Permitir HTTP entrante</h2>
+<div class="code">
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+</div>
+
+<h2>8. Permitir tráfico saliente</h2>
+<div class="code">
+iptables -A OUTPUT -j ACCEPT
+</div>
+
+<h2>9. Permitir SSH desde IP específica</h2>
+<div class="code">
+iptables -A INPUT -p tcp -s 192.168.1.50 --dport 22 -j ACCEPT
+</div>
+
+<h2>10. Permitir 80 y 443 si es establecida</h2>
+<div class="code">
+iptables -A INPUT -p tcp -m multiport --dports 80,443 -m state --state ESTABLISHED -j ACCEPT
+</div>
+
+<!-- BOTÓN -->
+<div class="download">
+    <a href="179859-act03.pdf" download class="btn-download">
+        Descargar PDF
+    </a>
+</div>
+
+</div>
+
+<footer>
+Karina Mendoza Aguado © 2026
+</footer>
+
+</body>
+</html>
