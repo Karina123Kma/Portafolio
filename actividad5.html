@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Actividad 05 | Metodologías de Pentesting</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --primary:#1a1a1a;
+    --accent:#c5a059;
+    --border:#ececec;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    font-family:'Montserrat',sans-serif;
+    color:var(--primary);
+    line-height:1.7;
+    background:white;
+}
+
+/* NAV */
+nav{
+    position:fixed;
+    top:0;
+    width:100%;
+    padding:15px 8%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:rgba(255,255,255,0.95);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+    z-index:10;
+}
+
+nav a{
+    text-decoration:none;
+    color:var(--primary);
+    font-size:.75rem;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+nav a:hover{color:var(--accent);}
+
+/* HEADER */
+.header{
+    padding-top:120px;
+    text-align:center;
+    margin-bottom:60px;
+}
+
+.header h1{
+    font-family:'Playfair Display',serif;
+    font-weight:400;
+    font-size:2.3rem;
+}
+
+.header p{
+    margin-top:10px;
+    color:#777;
+}
+
+/* CONTENT */
+.container{
+    max-width:1100px;
+    margin:auto;
+    padding:0 8% 80px;
+}
+
+h2{
+    font-family:'Playfair Display',serif;
+    font-weight:400;
+    margin:50px 0 20px;
+    font-size:1.6rem;
+    border-left:3px solid var(--accent);
+    padding-left:15px;
+}
+
+p{ margin-bottom:15px; }
+
+/* TABLE */
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+    font-size:.85rem;
+}
+
+th, td{
+    border:1px solid var(--border);
+    padding:10px;
+    text-align:left;
+    vertical-align:top;
+}
+
+th{
+    background:#f4f4f4;
+    font-weight:600;
+}
+
+/* DOWNLOAD */
+.download{
+    text-align:center;
+    margin-top:50px;
+}
+
+.btn-download{
+    display:inline-block;
+    padding:14px 28px;
+    background:var(--primary);
+    color:white;
+    text-decoration:none;
+    font-weight:600;
+    border-radius:8px;
+    transition:all .3s ease;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.btn-download:hover{
+    background:var(--accent);
+    transform:translateY(-3px);
+    box-shadow:0 8px 18px rgba(0,0,0,0.15);
+}
+
+/* FOOTER */
+footer{
+    border-top:1px solid var(--border);
+    text-align:center;
+    padding:40px 0;
+    font-size:.8rem;
+    margin-top:60px;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <div>💻</div>
+    <div>
+        <a href="parcial1.html">Volver al parcial</a>
+    </div>
+</nav>
+
+<div class="header">
+    <h1>Cartografiando el pentesting</h1>
+    <p>Análisis comparativo de metodologías</p>
+    <p><strong>Karina Mendoza Aguado | 179859</strong></p>
+</div>
+
+<div class="container">
+
+<h2>Introducción</h2>
+<p>
+Las pruebas de penetración permiten identificar vulnerabilidades y fortalecer la
+protección de los sistemas. Para realizarlas de manera estructurada existen marcos
+metodológicos que definen fases, objetivos y buenas prácticas.
+</p>
+<p>
+En esta actividad se analizan propuestas ampliamente reconocidas en el entorno
+profesional con el fin de comprender su alcance y los escenarios donde aportan mayor valor.
+</p>
+
+<h2>Tabla comparativa</h2>
+
+<table>
+<tr>
+<th>Metodología</th>
+<th>Descripción breve</th>
+<th>Objetivo principal</th>
+<th>Escenarios de uso</th>
+<th>Organización</th>
+</tr>
+
+<tr>
+<td>MITRE ATT&CK</td>
+<td>Base de conocimiento de tácticas y técnicas empleadas por adversarios reales.</td>
+<td>Comprender y mejorar capacidades de detección y defensa.</td>
+<td>SOC, threat hunting, validación de controles.</td>
+<td>MITRE</td>
+</tr>
+
+<tr>
+<td>OWASP WSTG</td>
+<td>Guía para ejecutar pruebas de seguridad en aplicaciones web.</td>
+<td>Detectar vulnerabilidades durante pruebas técnicas.</td>
+<td>Pentesting web y auditorías.</td>
+<td>OWASP</td>
+</tr>
+
+<tr>
+<td>NIST SP 800-115</td>
+<td>Marco formal para evaluación de seguridad organizacional.</td>
+<td>Medir efectividad de controles.</td>
+<td>Entornos regulados y gobierno.</td>
+<td>NIST</td>
+</tr>
+
+<tr>
+<td>OSSTMM</td>
+<td>Metodología científica para mediciones operativas.</td>
+<td>Cuantificar nivel real de seguridad.</td>
+<td>Infraestructura, físico y humano.</td>
+<td>ISECOM</td>
+</tr>
+
+<tr>
+<td>PTES</td>
+<td>Proceso completo que abarca todas las fases de un pentest.</td>
+<td>Estandarizar servicios profesionales.</td>
+<td>Consultoría especializada.</td>
+<td>Comunidad PTES</td>
+</tr>
+
+<tr>
+<td>ISSAF</td>
+<td>Marco detallado para revisiones técnicas profundas.</td>
+<td>Auditorías extensivas.</td>
+<td>Empresas y consultorías.</td>
+<td>OISSG</td>
+</tr>
+
+</table>
+
+<h2>Conclusión</h2>
+<p>
+Cada metodología ofrece ventajas particulares y responde a necesidades distintas.
+La selección adecuada depende de los objetivos del análisis, el tipo de infraestructura
+y el nivel de profundidad requerido por la organización.
+</p>
+
+<h2>Bibliografía</h2>
+<p>https://attack.mitre.org/</p>
+<p>https://owasp.org/www-project-web-security-testing-guide/</p>
+<p>https://csrc.nist.gov/</p>
+
+<!-- BOTÓN -->
+<div class="download">
+    <a href="179859-act05.pdf" download class="btn-download">
+        Descargar PDF
+    </a>
+</div>
+
+</div>
+
+<footer>
+Karina Mendoza Aguado © 2026
+</footer>
+
+</body>
+</html>
