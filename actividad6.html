@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Actividad 06 | Implementación IPSec VPN</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --primary:#1a1a1a;
+    --accent:#c5a059;
+    --border:#ececec;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+    font-family:'Montserrat',sans-serif;
+    color:var(--primary);
+    line-height:1.7;
+    background:white;
+}
+
+/* NAV */
+nav{
+    position:fixed;
+    top:0;
+    width:100%;
+    padding:15px 8%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:rgba(255,255,255,0.95);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+    z-index:10;
+}
+
+nav a{
+    text-decoration:none;
+    color:var(--primary);
+    font-size:.75rem;
+    font-weight:600;
+    text-transform:uppercase;
+    letter-spacing:1px;
+}
+
+nav a:hover{color:var(--accent);}
+
+/* HEADER */
+.header{
+    padding-top:120px;
+    text-align:center;
+    margin-bottom:60px;
+}
+
+.header h1{
+    font-family:'Playfair Display',serif;
+    font-weight:400;
+    font-size:2.3rem;
+}
+
+.header p{
+    margin-top:10px;
+    color:#777;
+}
+
+/* CONTENT */
+.container{
+    max-width:1000px;
+    margin:auto;
+    padding:0 8% 80px;
+}
+
+h2{
+    font-family:'Playfair Display',serif;
+    font-weight:400;
+    margin:50px 0 20px;
+    font-size:1.6rem;
+    border-left:3px solid var(--accent);
+    padding-left:15px;
+}
+
+p{ margin-bottom:15px; }
+
+ul{
+    margin-left:20px;
+    margin-bottom:15px;
+}
+
+.highlight{
+    background:#f7f7f7;
+    padding:12px;
+    border-radius:8px;
+    border:1px solid var(--border);
+    margin:15px 0;
+}
+
+/* DOWNLOAD */
+.download{
+    text-align:center;
+    margin-top:60px;
+}
+
+.btn-download{
+    display:inline-block;
+    padding:14px 28px;
+    background:var(--primary);
+    color:white;
+    text-decoration:none;
+    font-weight:600;
+    border-radius:8px;
+    transition:all .3s ease;
+    box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+.btn-download:hover{
+    background:var(--accent);
+    transform:translateY(-3px);
+    box-shadow:0 8px 18px rgba(0,0,0,0.15);
+}
+
+/* FOOTER */
+footer{
+    border-top:1px solid var(--border);
+    text-align:center;
+    padding:40px 0;
+    font-size:.8rem;
+    margin-top:60px;
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+    <div>💻</div>
+    <div>
+        <a href="parcial1.html">Volver al parcial</a>
+    </div>
+</nav>
+
+<div class="header">
+    <h1>Implementación IPSec VPN</h1>
+    <p>Actividad 06</p>
+    <p><strong>Karina Mendoza Aguado | 179859</strong></p>
+</div>
+
+<div class="container">
+
+<h2>Introducción</h2>
+<p>
+En esta práctica se configuró una VPN IPsec de sitio a sitio utilizando routers Cisco
+en el simulador Packet Tracer. El objetivo fue establecer un túnel seguro que
+permitiera la comunicación cifrada entre dos redes locales a través de una red pública simulada.
+</p>
+
+<h2>Diseño de la Topología</h2>
+<p>
+La topología implementada tuvo una estructura triangular conformada por:
+</p>
+
+<ul>
+<li><strong>R1:</strong> Sucursal A</li>
+<li><strong>R3:</strong> Sucursal B</li>
+<li><strong>Router ISP:</strong> Simulación del proveedor de servicios</li>
+<li>Dos switches para conexión LAN</li>
+<li>Dos equipos finales (PC-A y PC-C)</li>
+</ul>
+
+<p>
+Esta estructura permitió representar la interconexión entre redes remotas
+a través de un enlace externo.
+</p>
+
+<h2>Configuración Inicial</h2>
+<p>
+Se asignaron direcciones IPv4 a las interfaces GigabitEthernet y se configuraron
+rutas estáticas por defecto utilizando el comando:
+</p>
+
+<div class="highlight">
+ip route 0.0.0.0 0.0.0.0 [IP_ISP]
+</div>
+
+<p>
+Esto permitió simular la salida hacia Internet mediante el router ISP.
+</p>
+
+<h2>Implementación de IPSec</h2>
+<ul>
+<li><strong>ACL:</strong> Definición del tráfico interesante entre redes.</li>
+<li><strong>Fase 1 (ISAKMP):</strong> Cifrado AES, hash SHA, clave precompartida y DH grupo 2.</li>
+<li><strong>Fase 2 (Transform Set):</strong> ESP con AES y ESP-SHA-HMAC.</li>
+<li><strong>Crypto Map:</strong> Asociación de ACL, peer remoto y transform set a la interfaz WAN.</li>
+</ul>
+
+<p>
+Con estos pasos se estableció correctamente el túnel seguro entre ambas sucursales.
+</p>
+
+<h2>Corrección de Error en R1</h2>
+<div class="highlight">
+Error: "Crypto-map is in use by interface"<br><br>
+Solución aplicada:<br>
+1. Retirar el crypto map de la interfaz g0/0.<br>
+2. Eliminarlo desde configuración global.<br>
+3. Corregir la instrucción <em>match address 110</em>.<br>
+4. Reaplicarlo a la interfaz.
+</div>
+
+<h2>Verificación</h2>
+<p>
+En modo Simulation de Packet Tracer se comprobó que los paquetes ICMP
+eran encapsulados dentro de ESP (IPsec) al atravesar el router ISP,
+confirmando que la comunicación viajaba cifrada.
+</p>
+
+<h2>Conclusión</h2>
+<p>
+Se logró implementar exitosamente una VPN IPsec de sitio a sitio,
+garantizando comunicación segura entre dos redes remotas. La verificación
+confirmó el cifrado correcto del tráfico, cumpliendo el objetivo de la práctica.
+</p>
+
+<!-- BOTÓN -->
+<div class="download">
+    <a href="179859-act06.pdf" download class="btn-download">
+        Descargar PDF
+    </a>
+</div>
+
+</div>
+
+<footer>
+Karina Mendoza Aguado © 2026
+</footer>
+
+</body>
+</html>
