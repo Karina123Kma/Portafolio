@@ -3,33 +3,77 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lab 7 - SQL Injection</title>
+<title>Lab 7 | SQL Injection</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
 
 <style>
 
-body{
-font-family:'Montserrat',sans-serif;
-background:#ffffff;
-color:#1a1a1a;
-margin:0;
+:root{
+--primary:#1a1a1a;
+--accent:#c5a059;
+--border:#ececec;
+--light:#f7f7f7;
 }
 
+body{
+font-family:'Montserrat',sans-serif;
+margin:0;
+color:var(--primary);
+}
+
+/* NAV */
+
+nav{
+position:fixed;
+top:0;
+width:100%;
+padding:15px 8%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:white;
+border-bottom:1px solid var(--border);
+}
+
+nav a{
+text-decoration:none;
+color:var(--primary);
+font-size:.75rem;
+font-weight:600;
+text-transform:uppercase;
+}
+
+nav a:hover{
+color:var(--accent);
+}
+
+/* HEADER */
+
 .header{
+padding-top:120px;
+padding-bottom:40px;
 text-align:center;
-padding:80px 20px 40px;
+}
+
+.header span{
+font-size:.75rem;
+letter-spacing:3px;
+color:var(--accent);
 }
 
 .header h1{
 font-family:'Playfair Display',serif;
-font-size:2.5rem;
+font-size:2.8rem;
+font-weight:400;
 }
 
+/* CONTENT */
+
 .container{
-max-width:1000px;
+max-width:900px;
 margin:auto;
-padding:40px;
+padding:20px 40px 80px;
 }
 
 .section{
@@ -42,19 +86,20 @@ margin-bottom:10px;
 }
 
 .code{
-background:#f4f4f4;
-padding:20px;
-border-radius:5px;
+background:var(--light);
+padding:15px;
+border-radius:6px;
 font-family:monospace;
-white-space:pre-wrap;
+overflow:auto;
 }
 
-.footer{
+/* FOOTER */
+
+footer{
+border-top:1px solid var(--border);
 text-align:center;
-padding:30px;
-border-top:1px solid #eee;
-margin-top:50px;
-font-size:0.9rem;
+padding:40px 0;
+font-size:.8rem;
 }
 
 </style>
@@ -62,47 +107,134 @@ font-size:0.9rem;
 
 <body>
 
+<nav>
+<div>💻</div>
+<div>
+<a href="halloffame.html">Volver</a>
+</div>
+</nav>
+
 <div class="header">
+<span>SQL INJECTION LAB</span>
 <h1>Lab 7</h1>
-<p>SQL injection UNION attack, determining the number of columns returned by the query</p>
 </div>
 
 <div class="container">
 
 <div class="section">
-<h2>Descripción</h2>
+<h2>Nombre del laboratorio</h2>
 <p>
-Este laboratorio contiene una vulnerabilidad de SQL Injection en el filtro de categoría de productos.
-El objetivo es determinar cuántas columnas devuelve la consulta utilizando un ataque <strong>UNION SELECT</strong>.
+SQL injection UNION attack, determining the number of columns returned by the query
 </p>
 </div>
 
 <div class="section">
-<h2>Solución</h2>
+<h2>Objetivo del laboratorio</h2>
+
 <p>
-Se intercepta la solicitud con Burp Suite y se modifica el parámetro <strong>category</strong>.
-Se prueban diferentes payloads agregando valores NULL hasta que el error desaparezca y la consulta funcione correctamente.
+El objetivo de este laboratorio es determinar cuántas columnas devuelve la consulta SQL original para poder realizar ataques UNION correctamente.
 </p>
+
+<p>
+Identificar el número de columnas es un paso fundamental antes de extraer información de la base de datos mediante SQL Injection.
+</p>
+
+</div>
+
+<div class="section">
+<h2>Contexto técnico</h2>
+
+<p>
+La vulnerabilidad se encuentra en el filtro de categorías de productos de la aplicación web.
+</p>
+
+<p>
+Cuando el usuario selecciona una categoría, el servidor ejecuta una consulta SQL similar a la siguiente:
+</p>
+
+<div class="code">
+SELECT * FROM products WHERE category = 'Gifts' AND released = 1
+</div>
+
+<p>
+Debido a que el parámetro <b>category</b> no está correctamente validado, es posible inyectar consultas adicionales utilizando <b>UNION SELECT</b>.
+</p>
+
+<p>
+Para que una consulta UNION funcione correctamente, el número de columnas debe coincidir con el de la consulta original.
+</p>
+
 </div>
 
 <div class="section">
 <h2>Payloads utilizados</h2>
 
+<p>Primer intento:</p>
+
 <div class="code">
 '+UNION+SELECT+NULL--
+</div>
 
+<p>Segundo intento:</p>
+
+<div class="code">
 '+UNION+SELECT+NULL,NULL--
+</div>
 
+<p>Tercer intento:</p>
+
+<div class="code">
 '+UNION+SELECT+NULL,NULL,NULL--
 </div>
 
 </div>
 
+<div class="section">
+<h2>Explicación del ataque</h2>
+
+<p>
+Primero se interceptó la petición HTTP utilizando Burp Suite para modificar el parámetro <b>category</b>.
+</p>
+
+<p>
+Posteriormente se realizaron múltiples intentos utilizando la cláusula <b>UNION SELECT</b> agregando valores NULL.
+</p>
+
+<p>
+Cuando el número de columnas coincide con la consulta original, la aplicación deja de generar errores y muestra contenido adicional en la respuesta.
+</p>
+
+<p>
+Esto permite identificar cuántas columnas devuelve la consulta SQL original.
+</p>
+
 </div>
 
-<div class="footer">
-<p>Road To Hall Of Fame | SQL Injection Labs</p>
+<div class="section">
+<h2>Resultado</h2>
+
+<p>
+Después de probar distintos payloads con valores NULL, se logró identificar el número correcto de columnas devueltas por la consulta.
+</p>
+
+<p>
+Esta información es esencial para realizar ataques UNION más avanzados en los siguientes laboratorios.
+</p>
+
 </div>
+
+<div class="section">
+<h2>Evidencias</h2>
+
+<img src="img/lab7.png" width="100%">
+
+</div>
+
+</div>
+
+<footer>
+Karina Mendoza Aguado © 2026
+</footer>
 
 </body>
 </html>
