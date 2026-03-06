@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lab 1 | SQL Injection</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+--primary:#1a1a1a;
+--accent:#c5a059;
+--border:#ececec;
+--light:#f7f7f7;
+}
+
+body{
+font-family:'Montserrat',sans-serif;
+margin:0;
+color:var(--primary);
+}
+
+/* NAV */
+
+nav{
+position:fixed;
+top:0;
+width:100%;
+padding:15px 8%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:white;
+border-bottom:1px solid var(--border);
+}
+
+nav a{
+text-decoration:none;
+color:var(--primary);
+font-size:.75rem;
+font-weight:600;
+text-transform:uppercase;
+}
+
+nav a:hover{
+color:var(--accent);
+}
+
+/* HEADER */
+
+.header{
+padding-top:120px;
+padding-bottom:40px;
+text-align:center;
+}
+
+.header span{
+font-size:.75rem;
+letter-spacing:3px;
+color:var(--accent);
+}
+
+.header h1{
+font-family:'Playfair Display',serif;
+font-size:2.8rem;
+font-weight:400;
+}
+
+/* CONTENT */
+
+.container{
+max-width:900px;
+margin:auto;
+padding:20px 40px 80px;
+}
+
+.section{
+margin-bottom:40px;
+}
+
+.section h2{
+font-family:'Playfair Display',serif;
+margin-bottom:10px;
+}
+
+.code{
+background:var(--light);
+padding:15px;
+border-radius:6px;
+font-family:monospace;
+overflow:auto;
+}
+
+/* FOOTER */
+
+footer{
+border-top:1px solid var(--border);
+text-align:center;
+padding:40px 0;
+font-size:.8rem;
+}
+
+</style>
+</head>
+
+<body>
+
+<nav>
+<div>💻</div>
+<div>
+<a href="halloffame.html">Volver</a>
+</div>
+</nav>
+
+<div class="header">
+<span>SQL INJECTION LAB</span>
+<h1>Lab 1</h1>
+</div>
+
+<div class="container">
+
+<div class="section">
+<h2>Nombre del laboratorio</h2>
+<p>
+SQL injection vulnerability in WHERE clause allowing retrieval of hidden data.
+</p>
+</div>
+
+<div class="section">
+<h2>Descripción</h2>
+<p>
+Este laboratorio contiene una vulnerabilidad de SQL Injection en el filtro de categoría de productos.  
+Cuando un usuario selecciona una categoría, la aplicación ejecuta la siguiente consulta SQL:
+</p>
+
+<div class="code">
+SELECT * FROM products WHERE category = 'Gifts' AND released = 1
+</div>
+
+<p>
+El objetivo del laboratorio es manipular esta consulta para mostrar productos que aún no han sido publicados.
+</p>
+</div>
+
+<div class="section">
+<h2>Payload utilizado</h2>
+
+<div class="code">
+' OR 1=1--
+</div>
+
+<p>
+Este payload modifica la condición del WHERE para que siempre sea verdadera, permitiendo mostrar productos ocultos o no publicados.
+</p>
+</div>
+
+<div class="section">
+<h2>Proceso</h2>
+
+<p>1. Interceptar la solicitud usando Burp Suite.</p>
+<p>2. Localizar el parámetro <b>category</b>.</p>
+<p>3. Modificar el valor con el payload de SQL Injection.</p>
+<p>4. Enviar la solicitud modificada.</p>
+<p>5. Verificar que ahora aparecen productos no liberados.</p>
+
+</div>
+
+<div class="section">
+<h2>Resultado</h2>
+
+<p>
+La aplicación devuelve productos ocultos porque la condición lógica de la consulta SQL fue manipulada con la inyección.
+</p>
+
+</div>
+
+<div class="section">
+<h2>Evidencia</h2>
+
+<p>Aquí puedes agregar una captura de pantalla del laboratorio resuelto.</p>
+
+<img src="img/lab1.png" width="100%">
+
+</div>
+
+</div>
+
+<footer>
+Karina Mendoza Aguado © 2026
+</footer>
+
+</body>
+</html>
