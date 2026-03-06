@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lab 8 | SQL Injection</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+--primary:#1a1a1a;
+--accent:#c5a059;
+--border:#ececec;
+--light:#f7f7f7;
+}
+
+body{
+font-family:'Montserrat',sans-serif;
+margin:0;
+color:var(--primary);
+}
+
+/* NAV */
+
+nav{
+position:fixed;
+top:0;
+width:100%;
+padding:15px 8%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:white;
+border-bottom:1px solid var(--border);
+}
+
+nav a{
+text-decoration:none;
+color:var(--primary);
+font-size:.75rem;
+font-weight:600;
+text-transform:uppercase;
+}
+
+nav a:hover{
+color:var(--accent);
+}
+
+/* HEADER */
+
+.header{
+padding-top:120px;
+padding-bottom:40px;
+text-align:center;
+}
+
+.header span{
+font-size:.75rem;
+letter-spacing:3px;
+color:var(--accent);
+}
+
+.header h1{
+font-family:'Playfair Display',serif;
+font-size:2.8rem;
+font-weight:400;
+}
+
+/* CONTENT */
+
+.container{
+max-width:900px;
+margin:auto;
+padding:20px 40px 80px;
+}
+
+.section{
+margin-bottom:40px;
+}
+
+.section h2{
+font-family:'Playfair Display',serif;
+margin-bottom:10px;
+}
+
+.code{
+background:var(--light);
+padding:15px;
+border-radius:6px;
+font-family:monospace;
+overflow:auto;
+}
+
+/* FOOTER */
+
+footer{
+border-top:1px solid var(--border);
+text-align:center;
+padding:40px 0;
+font-size:.8rem;
+}
+
+</style>
+</head>
+
+<body>
+
+<nav>
+<div>💻</div>
+<div>
+<a href="halloffame.html">Volver</a>
+</div>
+</nav>
+
+<div class="header">
+<span>SQL INJECTION LAB</span>
+<h1>Lab 8</h1>
+</div>
+
+<div class="container">
+
+<div class="section">
+<h2>Nombre del laboratorio</h2>
+<p>
+SQL injection UNION attack, finding a column containing text
+</p>
+</div>
+
+<div class="section">
+<h2>Objetivo del laboratorio</h2>
+
+<p>
+El objetivo de este laboratorio es identificar qué columna de la consulta SQL permite almacenar datos de tipo texto.
+</p>
+
+<p>
+Esto es importante porque para extraer información mediante ataques UNION SELECT es necesario encontrar columnas compatibles con datos tipo string.
+</p>
+
+</div>
+
+<div class="section">
+<h2>Contexto técnico</h2>
+
+<p>
+La vulnerabilidad se encuentra en el filtro de categorías de productos de la aplicación web.
+</p>
+
+<p>
+Cuando el usuario selecciona una categoría, el servidor ejecuta una consulta SQL similar a la siguiente:
+</p>
+
+<div class="code">
+SELECT * FROM products WHERE category = 'Gifts' AND released = 1
+</div>
+
+<p>
+Debido a que la entrada del usuario no está correctamente validada, es posible inyectar consultas adicionales utilizando <b>UNION SELECT</b>.
+</p>
+
+<p>
+En este laboratorio primero se determina el número de columnas y posteriormente se identifica cuál de ellas acepta datos de tipo texto.
+</p>
+
+</div>
+
+<div class="section">
+<h2>Payloads utilizados</h2>
+
+<p>Determinar número de columnas:</p>
+
+<div class="code">
+'+UNION+SELECT+NULL,NULL,NULL--
+</div>
+
+<p>Probar columna 1 con texto:</p>
+
+<div class="code">
+'+UNION+SELECT+'abcdef',NULL,NULL--
+</div>
+
+<p>Probar columna 2 con texto:</p>
+
+<div class="code">
+'+UNION+SELECT+NULL,'abcdef',NULL--
+</div>
+
+<p>Probar columna 3 con texto:</p>
+
+<div class="code">
+'+UNION+SELECT+NULL,NULL,'abcdef'--
+</div>
+
+</div>
+
+<div class="section">
+<h2>Explicación del ataque</h2>
+
+<p>
+Primero se interceptó la solicitud utilizando Burp Suite para modificar el parámetro <b>category</b>.
+</p>
+
+<p>
+Posteriormente se utilizó una inyección UNION SELECT con valores NULL para determinar que la consulta original devuelve tres columnas.
+</p>
+
+<p>
+Después se reemplazó cada valor NULL por una cadena de texto para identificar cuál columna es compatible con datos tipo string.
+</p>
+
+<p>
+Cuando el valor de texto aparece en la respuesta de la aplicación, se confirma que esa columna acepta datos de tipo texto.
+</p>
+
+</div>
+
+<div class="section">
+<h2>Resultado</h2>
+
+<p>
+Se logró identificar correctamente la columna que acepta datos de tipo texto dentro de la consulta SQL.
+</p>
+
+<p>
+Esta información es esencial para realizar ataques más avanzados en los siguientes laboratorios, donde se extraerán datos de la base de datos.
+</p>
+
+</div>
+
+<div class="section">
+<h2>Evidencias</h2>
+
+<img src="img/lab8.png" width="100%">
+
+</div>
+
+</div>
+
+<footer>
+Karina Mendoza Aguado © 2026
+</footer>
+
+</body>
+</html>
