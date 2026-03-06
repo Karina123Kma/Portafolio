@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lab 4 | SQL Injection</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+--primary:#1a1a1a;
+--accent:#c5a059;
+--border:#ececec;
+--light:#f7f7f7;
+}
+
+body{
+font-family:'Montserrat',sans-serif;
+margin:0;
+color:var(--primary);
+}
+
+/* NAV */
+
+nav{
+position:fixed;
+top:0;
+width:100%;
+padding:15px 8%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:white;
+border-bottom:1px solid var(--border);
+}
+
+nav a{
+text-decoration:none;
+color:var(--primary);
+font-size:.75rem;
+font-weight:600;
+text-transform:uppercase;
+}
+
+nav a:hover{
+color:var(--accent);
+}
+
+/* HEADER */
+
+.header{
+padding-top:120px;
+padding-bottom:40px;
+text-align:center;
+}
+
+.header span{
+font-size:.75rem;
+letter-spacing:3px;
+color:var(--accent);
+}
+
+.header h1{
+font-family:'Playfair Display',serif;
+font-size:2.8rem;
+font-weight:400;
+}
+
+/* CONTENT */
+
+.container{
+max-width:900px;
+margin:auto;
+padding:20px 40px 80px;
+}
+
+.section{
+margin-bottom:40px;
+}
+
+.section h2{
+font-family:'Playfair Display',serif;
+margin-bottom:10px;
+}
+
+.code{
+background:var(--light);
+padding:15px;
+border-radius:6px;
+font-family:monospace;
+overflow:auto;
+}
+
+/* FOOTER */
+
+footer{
+border-top:1px solid var(--border);
+text-align:center;
+padding:40px 0;
+font-size:.8rem;
+}
+
+</style>
+</head>
+
+<body>
+
+<nav>
+<div>💻</div>
+<div>
+<a href="halloffame.html">Volver</a>
+</div>
+</nav>
+
+<div class="header">
+<span>SQL INJECTION LAB</span>
+<h1>Lab 4</h1>
+</div>
+
+<div class="container">
+
+<div class="section">
+<h2>Nombre del laboratorio</h2>
+<p>
+SQL injection attack, querying the database type and version on MySQL and Microsoft
+</p>
+</div>
+
+<div class="section">
+<h2>Objetivo del laboratorio</h2>
+
+<p>
+El objetivo de este laboratorio es explotar una vulnerabilidad de SQL Injection para obtener información sobre el tipo de base de datos y su versión utilizando un ataque UNION.
+</p>
+
+<p>
+En este caso se busca mostrar la versión del servidor de base de datos MySQL o Microsoft SQL Server.
+</p>
+
+</div>
+
+<div class="section">
+<h2>Contexto técnico</h2>
+
+<p>
+La vulnerabilidad se encuentra en el filtro de categorías de productos de la aplicación web.
+</p>
+
+<p>
+Cuando el usuario selecciona una categoría, el servidor ejecuta una consulta SQL similar a la siguiente:
+</p>
+
+<div class="code">
+SELECT * FROM products WHERE category = 'Gifts' AND released = 1
+</div>
+
+<p>
+Debido a que el parámetro <b>category</b> no valida correctamente la entrada del usuario, es posible inyectar código SQL adicional.
+</p>
+
+<p>
+Esto permite ejecutar consultas adicionales utilizando <b>UNION SELECT</b> para obtener información de la base de datos.
+</p>
+
+</div>
+
+<div class="section">
+<h2>Payload utilizado</h2>
+
+<div class="code">
+'+UNION+SELECT+@@version,+NULL#
+</div>
+
+</div>
+
+<div class="section">
+<h2>Explicación del payload</h2>
+
+<p>
+El payload utiliza la técnica <b>UNION SELECT</b> para combinar los resultados de la consulta original con una consulta controlada por el atacante.
+</p>
+
+<p>
+La variable del sistema <b>@@version</b> permite obtener la versión del servidor de base de datos en MySQL o Microsoft SQL Server.
+</p>
+
+<p>
+El valor <b>NULL</b> se utiliza para completar el número de columnas que devuelve la consulta original.
+</p>
+
+<p>
+El símbolo <b>#</b> se utiliza para comentar el resto de la consulta SQL original.
+</p>
+
+</div>
+
+<div class="section">
+<h2>Procedimiento</h2>
+
+<p>1. Acceder a la aplicación vulnerable desde el navegador.</p>
+<p>2. Interceptar la solicitud HTTP usando Burp Suite.</p>
+<p>3. Identificar el parámetro <b>category</b> en la solicitud.</p>
+<p>4. Determinar el número de columnas que devuelve la consulta original.</p>
+<p>5. Verificar qué columnas permiten mostrar datos de texto.</p>
+<p>6. Inyectar el payload utilizando UNION SELECT.</p>
+<p>7. Analizar la respuesta del servidor para visualizar la versión de la base de datos.</p>
+
+</div>
+
+<div class="section">
+<h2>Resultado</h2>
+
+<p>
+Después de enviar el payload, el servidor respondió mostrando la cadena que contiene la versión del sistema de base de datos.
+</p>
+
+<p>
+Esto confirma que la vulnerabilidad de SQL Injection fue explotada correctamente utilizando un ataque UNION.
+</p>
+
+</div>
+
+<div class="section">
+<h2>Evidencias</h2>
+
+<img src="img/lab4.png" width="100%">
+
+</div>
+
+</div>
+
+<footer>
+Karina Mendoza Aguado © 2026
+</footer>
+
+</body>
+</html>
